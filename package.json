@@ -1,0 +1,28 @@
+{
+  "name": "ktbday",
+  "version": "1.0.0",
+  "description": "Komputronik Bizness Day UAM 2018",
+  "main": "index.js",
+  "dependencies": {
+    "@aspnet/signalr-client": "^1.0.0-alpha2-final"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konraddysput/KTBDay.git"
+  },
+  "keywords": [
+    "KTB",
+    "ASPNET",
+    "DOTNET"
+  ],
+  "author": "Konrad Dysput, Sebastian Alex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konraddysput/KTBDay/issues"
+  },
+  "homepage": "https://github.com/konraddysput/KTBDay#readme"
+}
