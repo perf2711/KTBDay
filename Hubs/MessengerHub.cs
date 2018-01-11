@@ -19,7 +19,7 @@ namespace KTBDay.Hubs
         public Task Message(string message)
         {
             _sender.SendMessage(message);
-            return Clients.All.InvokeAsync("Message", message);
+            return Task.CompletedTask;
         }
     }
 }
