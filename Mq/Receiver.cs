@@ -1,4 +1,5 @@
 ﻿using KTBDay.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -8,13 +9,13 @@ namespace KTBDay.Mq
 {
     public class Receiver : IDisposable
     {
-        private MessengerHub _hub;
+        private IHubContext<MessengerHub> _hub;
         private Client _client;
         private IModel _channel;
         private EventingBasicConsumer _consumer;
         private string _queueName;
 
-        public Receiver(Client client, MessengerHub hub)
+        public Receiver(Client client, IHubContext<MessengerHub> hub)
         {
             _client = client;
             _hub = hub;
@@ -35,7 +36,7 @@ namespace KTBDay.Mq
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body);
-                await _hub.Message(message);
+                await _hub.Clients.All.InvokeAsync("Message", message);
             };
 
             _channel.BasicConsume(_queueName, true, _consumer);
@@ -43,9 +44,8 @@ namespace KTBDay.Mq
 
         public void Dispose()
         {
-            _channel.BasicCancel(_consumer.ConsumerTag);
-            _channel.Dispose();
-            _client.Dispose();
+            _channel?.BasicCancel(_consumer.ConsumerTag);
+            _channel?.Dispose();
         }
     }
 }

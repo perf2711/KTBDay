@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using KTBDay.Hubs;
 using KTBDay.Models;
 using KTBDay.Mq;
+using Microsoft.AspNetCore.SignalR;
 
 namespace KTBDay
 {
@@ -30,7 +31,7 @@ namespace KTBDay
             services.AddMvc();
 
             services.AddSingleton(s => new Client(mqConfig));
-            services.AddSingleton(s => new Receiver(s.GetService<Client>(), s.GetService<MessengerHub>()));
+            services.AddSingleton(s => new Receiver(s.GetService<Client>(), s.GetService<IHubContext<MessengerHub>>()));
             services.AddScoped(s => new Sender(s.GetService<Client>()));
         }
 
@@ -58,6 +59,8 @@ namespace KTBDay
             {
                 routes.MapHub<MessengerHub>("messengerHub");
             });
+
+            app.ApplicationServices.GetService<Receiver>();
         }
 
         private MqConnectionViewModel GetMqConfiguration()

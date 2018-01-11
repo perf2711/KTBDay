@@ -1,9 +1,6 @@
 ﻿using KTBDay.Models;
 using RabbitMQ.Client;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KTBDay.Mq
 {
@@ -33,7 +30,7 @@ namespace KTBDay.Mq
 
         public void Dispose()
         {
-            Connection.Dispose();
+            Connection?.Dispose();
         }
     }
 }

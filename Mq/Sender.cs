@@ -16,12 +16,13 @@ namespace KTBDay.Mq
         public Sender(Client client)
         {
             _client = client;
+
+            Initialize();
         }
 
         private void Initialize()
         {
             _channel = _client.Connection.CreateModel();
-
             _channel.ExchangeDeclare(_client.ConnectionConfig.Exchange, "fanout");
         }
 
@@ -33,8 +34,7 @@ namespace KTBDay.Mq
 
         public void Dispose()
         {
-            _channel.Dispose();
-            _client.Dispose();
+            _channel?.Dispose();
         }
     }
 }
